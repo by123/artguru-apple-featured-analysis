@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artguru · Apple Store 精选可行性分析</title>
+    <style>
+        :root {
+            --apple-blue: #0071E3;
+            --apple-blue-dark: #0056B3;
+            --apple-gray-bg: #F5F5F7;
+            --apple-dark: #1D1D1F;
+            --apple-gray: #6E6E73;
+            --apple-light-gray: #86868B;
+            --green: #34C759;
+            --red: #FF3B30;
+            --orange: #FF9500;
+            --purple: #AF52DE;
+            --card-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            --card-shadow-hover: 0 8px 40px rgba(0,0,0,0.12);
+            --radius: 20px;
+            --radius-sm: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+            background: #FFFFFF;
+            color: var(--apple-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+            overflow: hidden;
+            text-align: center;
+            padding: 60px 24px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(0,113,227,0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 50%, rgba(175,82,222,0.1) 0%, transparent 50%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-2%, 2%) rotate(1deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 100px;
+            padding: 8px 20px;
+            margin-bottom: 32px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 0.5px;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 7vw, 80px);
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #0071E3 0%, #AF52DE 50%, #FF9500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 2.5vw, 24px);
+            color: rgba(255,255,255,0.6);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.5;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .hero-stat .label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.3);
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Section */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--apple-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 700;
+            color: var(--apple-dark);
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 18px;
+            color: var(--apple-light-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Evaluation Grid */
+        .eval-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .eval-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: var(--radius);
+            padding: 32px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .eval-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: transparent;
+        }
+
+        .eval-card .status-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .eval-card .status-icon.pass {
+            background: rgba(52,199,89,0.12);
+        }
+
+        .eval-card .status-icon.fail {
+            background: rgba(255,59,48,0.12);
+        }
+
+        .eval-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--apple-dark);
+        }
+
+        .eval-card .criteria {
+            font-size: 13px;
+            color: var(--apple-light-gray);
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .eval-card .detail {
+            font-size: 15px;
+            color: var(--apple-gray);
+            line-height: 1.6;
+        }
+
+        .eval-card .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .eval-card .tag.pass {
+            background: rgba(52,199,89,0.12);
+            color: #248A3D;
+        }
+
+        .eval-card .tag.fail {
+            background: rgba(255,59,48,0.12);
+            color: #D70015;
+        }
+
+        /* Metrics Section */
+        .metrics-section {
+            background: var(--apple-gray-bg);
+            border-radius: 30px;
+            padding: 80px 40px;
+            margin: 0 24px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .metric-card {
+            text-align: center;
+            background: #FFFFFF;
+            border-radius: var(--radius);
+            padding: 40px 24px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .metric-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .metric-icon.blue { background: rgba(0,113,227,0.12); }
+        .metric-icon.green { background: rgba(52,199,89,0.12); }
+        .metric-icon.orange { background: rgba(255,149,0,0.12); }
+
+        .metric-value {
+            font-size: 44px;
+            font-weight: 700;
+            color: var(--apple-dark);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 15px;
+            color: var(--apple-light-gray);
+            font-weight: 500;
+        }
+
+        /* Featured Table */
+        .featured-table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius);
+            border: 1px solid rgba(0,0,0,0.06);
+            background: #FFFFFF;
+        }
+
+        .featured-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            min-width: 700px;
+        }
+
+        .featured-table thead {
+            background: var(--apple-gray-bg);
+        }
+
+        .featured-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--apple-dark);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .featured-table td {
+            padding: 16px 20px;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            color: var(--apple-gray);
+            vertical-align: middle;
+        }
+
+        .featured-table tbody tr:hover {
+            background: rgba(0,113,227,0.02);
+        }
+
+        .table-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .table-badge.today {
+            background: linear-gradient(135deg, rgba(255,149,0,0.15), rgba(255,59,48,0.15));
+            color: #C93400;
+        }
+
+        .table-badge.normal {
+            background: rgba(0,113,227,0.1);
+            color: #0056B3;
+        }
+
+        .table-badge.category {
+            background: rgba(175,82,222,0.1);
+            color: #8944AB;
+        }
+
+        .total-cell {
+            font-weight: 700;
+            color: var(--apple-dark) !important;
+        }
+
+        /* Strategy Section */
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .strategy-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: var(--radius);
+            padding: 36px;
+            transition: all 0.3s ease;
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: transparent;
+        }
+
+        .strategy-card .card-number {
+            display: inline-flex;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #FFFFFF;
+        }
+
+        .strategy-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .strategy-card p {
+            font-size: 15px;
+            color: var(--apple-gray);
+            line-height: 1.7;
+        }
+
+        .strategy-card ul {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .strategy-card ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: var(--apple-gray);
+            line-height: 1.6;
+        }
+
+        .strategy-card ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--apple-blue);
+        }
+
+        /* Probability Section */
+        .prob-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .prob-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: var(--radius);
+            padding: 36px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prob-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .prob-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--apple-dark);
+        }
+
+        .prob-ring {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+        }
+
+        .prob-ring svg {
+            width: 120px;
+            height: 120px;
+            transform: rotate(-90deg);
+        }
+
+        .prob-ring .ring-bg {
+            fill: none;
+            stroke: var(--apple-gray-bg);
+            stroke-width: 8;
+        }
+
+        .prob-ring .ring-fill {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.5s ease;
+        }
+
+        .prob-ring .ring-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--apple-dark);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--apple-blue), var(--purple));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 72px;
+            padding-bottom: 48px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 14px;
+            top: 4px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0 0 0 2px var(--apple-blue);
+        }
+
+        .timeline-dot.step1 { background: var(--apple-blue); }
+        .timeline-dot.step2 { background: var(--orange); }
+        .timeline-dot.step3 { background: var(--green); }
+
+        .timeline-date {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--apple-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--apple-dark);
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 15px;
+            color: var(--apple-gray);
+            line-height: 1.7;
+        }
+
+        /* Long Tail Effects */
+        .effects-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .effect-card {
+            text-align: center;
+            padding: 36px 20px;
+            background: #FFFFFF;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .effect-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: transparent;
+        }
+
+        .effect-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .effect-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--apple-dark);
+            margin-bottom: 6px;
+        }
+
+        .effect-card p {
+            font-size: 13px;
+            color: var(--apple-light-gray);
+        }
+
+        /* Screenshots Gallery */
+        .gallery-section {
+            background: linear-gradient(180deg, #000000, #1a1a2e);
+            padding: 100px 0;
+            overflow: hidden;
+        }
+
+        .gallery-section .section-tag {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .gallery-section .section-title {
+            color: #FFFFFF;
+        }
+
+        .gallery-section .section-desc {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .gallery-scroll {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .gallery-item {
+            width: 220px;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            transition: all 0.4s ease;
+            flex-shrink: 0;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Resources */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .resource-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #FFFFFF;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: transparent;
+        }
+
+        .resource-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--apple-gray-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .resource-card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--apple-dark);
+            margin-bottom: 2px;
+        }
+
+        .resource-card p {
+            font-size: 13px;
+            color: var(--apple-light-gray);
+        }
+
+        .resource-card .arrow {
+            margin-left: auto;
+            color: var(--apple-light-gray);
+            font-size: 18px;
+            transition: transform 0.2s ease;
+        }
+
+        .resource-card:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 60px 24px;
+            background: var(--apple-gray-bg);
+        }
+
+        .footer p {
+            font-size: 13px;
+            color: var(--apple-light-gray);
+        }
+
+        .footer .footer-brand {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--apple-dark);
+            margin-bottom: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-stats {
+                gap: 32px;
+            }
+
+            .hero-stat .number {
+                font-size: 36px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-section {
+                margin: 0 16px;
+                padding: 60px 24px;
+            }
+
+            .prob-grid {
+                grid-template-columns: 1fr;
+                max-width: 320px;
+            }
+
+            .effects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .eval-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item {
+                width: 180px;
+            }
+
+            .section {
+                padding: 72px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .effects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item {
+                width: 160px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Quote Block */
+        .story-block {
+            background: linear-gradient(135deg, rgba(0,113,227,0.05), rgba(175,82,222,0.05));
+            border-left: 4px solid var(--apple-blue);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 32px 36px;
+            margin: 48px 0;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .story-block p {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--apple-gray);
+            line-height: 1.8;
+        }
+
+        .story-block .attribution {
+            margin-top: 12px;
+            font-size: 14px;
+            font-style: normal;
+            color: var(--apple-light-gray);
+        }
+
+        /* Note card */
+        .note-card {
+            background: rgba(255,149,0,0.06);
+            border: 1px solid rgba(255,149,0,0.15);
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            margin-top: 32px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .note-card .note-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .note-card p {
+            font-size: 14px;
+            color: var(--apple-gray);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                可行性分析报告
+            </div>
+            <h1>
+                Artguru<br>
+                <span class="gradient-text">Apple Store 精选</span><br>
+                提名策略
+            </h1>
+            <p class="hero-subtitle">
+                深入分析 Artguru 获得 Apple 编辑推荐的机会、策略与预期收益
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="number">200+</div>
+                    <div class="label">日均新增用户</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">2%+</div>
+                    <div class="label">订阅转化率</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">$100</div>
+                    <div class="label">日均订阅收入</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">4.5</div>
+                    <div class="label">App Store 评分</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Section 1: Core Evaluation -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">一 · 核心评估</div>
+                <h2 class="section-title">Apple 推荐的核心评估维度</h2>
+                <p class="section-desc">基于 Apple 官方标准，逐项评估 Artguru 的精选资质</p>
+            </div>
+            <div class="eval-grid">
+                <div class="eval-card fade-in">
+                    <div class="status-icon pass">✅</div>
+                    <h3>用户体验</h3>
+                    <div class="criteria">功能全面、高效且实用，易于使用</div>
+                    <div class="detail">高清工具覆盖图片/视频/文档，编辑工具支持背景移除与物体移除</div>
+                    <span class="tag pass">通过</span>
+                </div>
+                <div class="eval-card fade-in">
+                    <div class="status-icon pass">✅</div>
+                    <h3>用户界面设计</h3>
+                    <div class="criteria">出色的易用性、吸引力和整体质量</div>
+                    <div class="detail">UI 适配 iOS 26，视觉效果精美，大量使用手势操作，易用性高</div>
+                    <span class="tag pass">通过</span>
+                </div>
+                <div class="eval-card fade-in">
+                    <div class="status-icon pass">✅</div>
+                    <h3>创新</h3>
+                    <div class="criteria">用新技术解决独特问题并提供更佳的用户体验</div>
+                    <div class="detail">图片高清技术行业领先</div>
+                    <span class="tag pass">通过</span>
+                </div>
+                <div class="eval-card fade-in">
+                    <div class="status-icon fail">❌</div>
+                    <h3>独特性</h3>
+                    <div class="criteria">以全新的视角诠释熟悉的类别，使其脱颖而出或开创全新类型</div>
+                    <div class="detail">当前产品在品类中的差异化不够明显，需进一步强化独特卖点</div>
+                    <span class="tag fail">待提升</span>
+                </div>
+                <div class="eval-card fade-in">
+                    <div class="status-icon pass">✅</div>
+                    <h3>易用性</h3>
+                    <div class="criteria">功能集成完善，为各类用户提供绝佳体验</div>
+                    <div class="detail">产品功能完善，免费/付费用户、登录/未登录用户均可体验</div>
+                    <span class="tag pass">通过</span>
+                </div>
+                <div class="eval-card fade-in">
+                    <div class="status-icon pass">✅</div>
+                    <h3>本地化</h3>
+                    <div class="criteria">提供高质量的多语言支持，内容符合当地文化</div>
+                    <div class="detail">支持 20+ 语言版本</div>
+                    <span class="tag pass">通过</span>
+                </div>
+                <div class="eval-card fade-in">
+                    <div class="status-icon pass">✅</div>
+                    <h3>App Store 产品页面</h3>
+                    <div class="criteria">引人注目的屏幕截图、应用预览和描述，以及积极的评分和评论</div>
+                    <div class="detail">截图与描述已迭代多版本，所有国家 671 个评分，综合评分 4.5</div>
+                    <span class="tag pass">通过</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Metrics -->
+    <div class="metrics-section fade-in">
+        <div class="section-header">
+            <div class="section-tag">二 · 数据指标</div>
+            <h2 class="section-title">App 主要数据表现</h2>
+            <p class="section-desc">Artguru 当前核心运营数据</p>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon blue">👥</div>
+                <div class="metric-value">200+</div>
+                <div class="metric-label">NDAU 日均新增活跃用户</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon green">📈</div>
+                <div class="metric-value">2%+</div>
+                <div class="metric-label">NDAU 订阅率（不含内购）</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon orange">💰</div>
+                <div class="metric-value">$100</div>
+                <div class="metric-label">日均新增订阅收入</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Featured Positions -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">三 · 精选位分析</div>
+                <h2 class="section-title">精选位预期收益</h2>
+                <p class="section-desc">不同精选位在各区域的预期新增用户与订阅转化</p>
+            </div>
+
+            <!-- Today Tab -->
+            <h3 style="font-size:20px;font-weight:600;margin-bottom:20px;color:var(--apple-dark)" class="fade-in">
+                <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--orange);margin-right:8px;vertical-align:middle"></span>
+                Today Tab 主故事 / 头图推荐（黄金位）
+            </h3>
+            <div class="featured-table-wrapper fade-in" style="margin-bottom:48px">
+                <table class="featured-table">
+                    <thead>
+                        <tr>
+                            <th>精选位</th>
+                            <th>区域</th>
+                            <th>自然新增（中位数）</th>
+                            <th>订阅转化</th>
+                            <th>日订阅 DAU</th>
+                            <th>持续时间</th>
+                            <th>总增长订阅</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="table-badge today">Today 推荐</span></td>
+                            <td>🇺🇸 美国</td>
+                            <td><strong>12,000</strong></td>
+                            <td>0.6% – 1.2%</td>
+                            <td>72 - 144</td>
+                            <td>1-3 天（长尾 1-2 周）</td>
+                            <td class="total-cell">1,000+</td>
+                        </tr>
+                        <tr>
+                            <td><span class="table-badge today">Today 推荐</span></td>
+                            <td>🇬🇧🇦🇺🇨🇦 英/澳/加</td>
+                            <td><strong>5,000</strong></td>
+                            <td>0.6% – 1.2%</td>
+                            <td>30 - 60</td>
+                            <td>1-3 天（长尾 1-2 周）</td>
+                            <td class="total-cell">1,000+</td>
+                        </tr>
+                        <tr>
+                            <td><span class="table-badge today">Today 推荐</span></td>
+                            <td>🌍 其他地区</td>
+                            <td><strong>1,500</strong></td>
+                            <td>0.6% – 1.2%</td>
+                            <td>9 - 18</td>
+                            <td>1-3 天（长尾 1-2 周）</td>
+                            <td class="total-cell">1,000+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Normal Featured -->
+            <h3 style="font-size:20px;font-weight:600;margin-bottom:20px;color:var(--apple-dark)" class="fade-in">
+                <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--apple-blue);margin-right:8px;vertical-align:middle"></span>
+                普通精选位
+            </h3>
+            <div class="featured-table-wrapper fade-in" style="margin-bottom:48px">
+                <table class="featured-table">
+                    <thead>
+                        <tr>
+                            <th>精选位</th>
+                            <th>区域</th>
+                            <th>自然新增（中位数）</th>
+                            <th>订阅转化</th>
+                            <th>日订阅 DAU</th>
+                            <th>持续时间</th>
+                            <th>总增长订阅</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="table-badge normal">普通精选</span></td>
+                            <td>🇺🇸 美国</td>
+                            <td><strong>4,000</strong></td>
+                            <td>0.5% – 1.5%</td>
+                            <td>20 - 60</td>
+                            <td>3 - 10 天</td>
+                            <td class="total-cell">500+</td>
+                        </tr>
+                        <tr>
+                            <td><span class="table-badge normal">普通精选</span></td>
+                            <td>🇬🇧🇦🇺🇨🇦 英/澳/加</td>
+                            <td><strong>1,200</strong></td>
+                            <td>0.5% – 1.5%</td>
+                            <td>6 - 18</td>
+                            <td>3 - 10 天</td>
+                            <td class="total-cell">500+</td>
+                        </tr>
+                        <tr>
+                            <td><span class="table-badge normal">普通精选</span></td>
+                            <td>🌍 其他地区</td>
+                            <td><strong>500</strong></td>
+                            <td>0.5% – 1.5%</td>
+                            <td>2 - 8</td>
+                            <td>3 - 10 天</td>
+                            <td class="total-cell">500+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Category Featured -->
+            <h3 style="font-size:20px;font-weight:600;margin-bottom:20px;color:var(--apple-dark)" class="fade-in">
+                <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--purple);margin-right:8px;vertical-align:middle"></span>
+                类别榜单推荐 / 专题合集页
+            </h3>
+            <div class="featured-table-wrapper fade-in">
+                <table class="featured-table">
+                    <thead>
+                        <tr>
+                            <th>精选位</th>
+                            <th>区域</th>
+                            <th>自然新增（中位数）</th>
+                            <th>订阅转化</th>
+                            <th>日订阅 DAU</th>
+                            <th>持续时间</th>
+                            <th>总增长订阅</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="table-badge category">类别推荐</span></td>
+                            <td>🇺🇸 美国</td>
+                            <td><strong>3,000</strong></td>
+                            <td>0.8% – 2%</td>
+                            <td>24 - 60</td>
+                            <td>7 - 30 天</td>
+                            <td class="total-cell">800+</td>
+                        </tr>
+                        <tr>
+                            <td><span class="table-badge category">类别推荐</span></td>
+                            <td>🇬🇧🇦🇺🇨🇦 英/澳/加</td>
+                            <td><strong>1,000</strong></td>
+                            <td>0.8% – 2%</td>
+                            <td>8 - 20</td>
+                            <td>7 - 30 天</td>
+                            <td class="total-cell">800+</td>
+                        </tr>
+                        <tr>
+                            <td><span class="table-badge category">类别推荐</span></td>
+                            <td>🌍 其他地区</td>
+                            <td><strong>500</strong></td>
+                            <td>0.8% – 2%</td>
+                            <td>2 - 8</td>
+                            <td>7 - 30 天</td>
+                            <td class="total-cell">800+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Nomination Strategy -->
+    <section class="section" style="background:var(--apple-gray-bg)">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">四 · 提名策略</div>
+                <h2 class="section-title">提名文案要点</h2>
+                <p class="section-desc">以情感故事驱动，打造打动 Apple 编辑的提名材料</p>
+            </div>
+
+            <div class="story-block fade-in">
+                <p>「Artguru 帮助德国用户修复了家人的老照片，那些模糊的回忆重新焕发清晰，并制作了照片墙，这不仅仅是提高画质，更是重拾记忆。」</p>
+                <div class="attribution">— 情感驱动核心故事示例，贴近 Today 编辑喜好</div>
+            </div>
+
+            <div class="strategy-grid">
+                <div class="strategy-card fade-in">
+                    <div class="card-number" style="background:var(--apple-blue)">1</div>
+                    <h3>精选亮点提炼</h3>
+                    <p>在提名描述中着重强调：</p>
+                    <ul>
+                        <li>一键提升照片 & 视频 & PDF 的清晰度</li>
+                        <li>老照片修复让珍贵回忆复活</li>
+                        <li>内置 AI 编辑功能（去背景 & 去对象）</li>
+                        <li>多语言 & 多平台支持</li>
+                    </ul>
+                </div>
+                <div class="strategy-card fade-in">
+                    <div class="card-number" style="background:var(--purple)">2</div>
+                    <h3>提供真实示例素材</h3>
+                    <p>准备以下材料提升说服力：</p>
+                    <ul>
+                        <li>2–5 个 Before / After 示例</li>
+                        <li>1–2 个用户故事（带文本/链接）</li>
+                        <li>演示视频（可展现修复过程）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="note-card fade-in">
+                <span class="note-icon">💡</span>
+                <p>每个国家/地区都需要单独提一份精选提名。一次提名最多可同时选择 20 个国家/地区，每一批都可以使用同一套素材。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Probability -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">五 · 成功概率</div>
+                <h2 class="section-title">精选成功概率区间</h2>
+                <p class="section-desc">基于行业数据的成功概率评估</p>
+            </div>
+            <div class="prob-grid">
+                <div class="prob-card fade-in">
+                    <h3>Today 推荐</h3>
+                    <div class="prob-ring">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" r="50"/>
+                            <circle class="ring-fill" cx="60" cy="60" r="50"
+                                stroke="var(--orange)"
+                                stroke-dasharray="314"
+                                stroke-dashoffset="298.3"
+                                data-target="298.3"/>
+                        </svg>
+                        <div class="ring-label">1-5%</div>
+                    </div>
+                    <p style="font-size:13px;color:var(--apple-light-gray)">竞争最激烈，但曝光效果最佳</p>
+                </div>
+                <div class="prob-card fade-in">
+                    <h3>普通精选</h3>
+                    <div class="prob-ring">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" r="50"/>
+                            <circle class="ring-fill" cx="60" cy="60" r="50"
+                                stroke="var(--apple-blue)"
+                                stroke-dasharray="314"
+                                stroke-dashoffset="282.6"
+                                data-target="282.6"/>
+                        </svg>
+                        <div class="ring-label">5-15%</div>
+                    </div>
+                    <p style="font-size:13px;color:var(--apple-light-gray)">性价比较高的推荐位置</p>
+                </div>
+                <div class="prob-card fade-in">
+                    <h3>类别榜单推荐</h3>
+                    <div class="prob-ring">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" r="50"/>
+                            <circle class="ring-fill" cx="60" cy="60" r="50"
+                                stroke="var(--purple)"
+                                stroke-dasharray="314"
+                                stroke-dashoffset="235.5"
+                                data-target="235.5"/>
+                        </svg>
+                        <div class="ring-label">10-25%</div>
+                    </div>
+                    <p style="font-size:13px;color:var(--apple-light-gray)">成功率最高，持续时间最长</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Timeline -->
+    <section class="section" style="background:var(--apple-gray-bg)">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">六 · 时间规划</div>
+                <h2 class="section-title">提名时间规划</h2>
+                <p class="section-desc">从准备到预期获得反馈的时间节点</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot step1"></div>
+                    <div class="timeline-date">2月24日 — 2月28日</div>
+                    <div class="timeline-title">准备阶段</div>
+                    <div class="timeline-desc">提名文案准备，收集用户故事，整理素材资料</div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot step2"></div>
+                    <div class="timeline-date">3月1日 — 3月15日</div>
+                    <div class="timeline-title">等待审核</div>
+                    <div class="timeline-desc">提交提名后等待苹果编辑审核</div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot step3"></div>
+                    <div class="timeline-date">3月15日 — 3月31日</div>
+                    <div class="timeline-title">预期反馈</div>
+                    <div class="timeline-desc">如编辑审核通过，预计收到编辑邮件，准备相关推广材料</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Long Tail Effects -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">七 · 长尾效应</div>
+                <h2 class="section-title">精选的长期价值</h2>
+                <p class="section-desc">精选真实价值不在「当期收入」，而在长期增长</p>
+            </div>
+            <div class="effects-grid">
+                <div class="effect-card fade-in">
+                    <div class="effect-icon" style="background:rgba(0,113,227,0.1)">📊</div>
+                    <h3>排名提升</h3>
+                    <p>App Store 排名显著提升</p>
+                </div>
+                <div class="effect-card fade-in">
+                    <div class="effect-icon" style="background:rgba(52,199,89,0.1)">🔑</div>
+                    <h3>关键词权重</h3>
+                    <p>搜索关键词权重大幅提升</p>
+                </div>
+                <div class="effect-card fade-in">
+                    <div class="effect-icon" style="background:rgba(175,82,222,0.1)">🔍</div>
+                    <h3>搜索流量</h3>
+                    <p>搜索流量长期抬高</p>
+                </div>
+                <div class="effect-card fade-in">
+                    <div class="effect-icon" style="background:rgba(255,149,0,0.1)">📰</div>
+                    <h3>媒体曝光</h3>
+                    <p>媒体二次曝光机会增加</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: App Store Screenshots -->
+    <section class="gallery-section">
+        <div class="section-header fade-in">
+            <div class="section-tag">参考</div>
+            <h2 class="section-title">App Store 精选位示例</h2>
+            <p class="section-desc">当前 App Store 各精选位的实际展示效果</p>
+        </div>
+        <div class="gallery-scroll fade-in">
+            <div class="gallery-item">
+                <img src="images/image12.png" alt="Today Tab">
+            </div>
+            <div class="gallery-item">
+                <img src="images/image9.png" alt="Apps Tab">
+            </div>
+            <div class="gallery-item">
+                <img src="images/image2.png" alt="Photo & Video Category">
+            </div>
+            <div class="gallery-item">
+                <img src="images/image13.png" alt="Search Tab">
+            </div>
+            <div class="gallery-item">
+                <img src="images/image14.png" alt="Today Tab Featured">
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 8: Resources -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-tag">八 · 相关资料</div>
+                <h2 class="section-title">Apple 官方资源</h2>
+                <p class="section-desc">提名所需的官方指南与模版</p>
+            </div>
+            <div class="resources-grid">
+                <a class="resource-card fade-in" href="https://developer.apple.com/app-store/getting-featured/" target="_blank" rel="noopener">
+                    <div class="resource-icon">📘</div>
+                    <div>
+                        <h3>官方精选介绍</h3>
+                        <p>Getting Featured on the App Store</p>
+                    </div>
+                    <span class="arrow">→</span>
+                </a>
+                <a class="resource-card fade-in" href="https://developer.apple.com/help/app-store-connect/manage-featuring-nominations/nominate-your-app-for-featuring" target="_blank" rel="noopener">
+                    <div class="resource-icon">📋</div>
+                    <div>
+                        <h3>创建提名流程</h3>
+                        <p>Nominate Your App for Featuring</p>
+                    </div>
+                    <span class="arrow">→</span>
+                </a>
+                <a class="resource-card fade-in" href="https://developer.apple.com/help/app-store-connect/reference/nominations/nominations-template" target="_blank" rel="noopener">
+                    <div class="resource-icon">📝</div>
+                    <div>
+                        <h3>提名模版</h3>
+                        <p>Nominations Template</p>
+                    </div>
+                    <span class="arrow">→</span>
+                </a>
+                <a class="resource-card fade-in" href="https://help.apple.com/asc/appspromoart/#/itc9783ca70f" target="_blank" rel="noopener">
+                    <div class="resource-icon">🎨</div>
+                    <div>
+                        <h3>推广素材说明</h3>
+                        <p>App Promotional Artwork</p>
+                    </div>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-brand">Artguru</div>
+        <p>Apple Store 精选可行性分析 · 内部参考文档</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Animate probability rings on scroll
+        const ringObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fills = entry.target.querySelectorAll('.ring-fill');
+                    fills.forEach(fill => {
+                        const target = fill.getAttribute('data-target');
+                        fill.style.strokeDashoffset = target;
+                    });
+                    ringObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.prob-grid').forEach(el => ringObserver.observe(el));
+    </script>
+</body>
+</html>
